@@ -16,12 +16,13 @@ func run() error {
 	postgresDB := os.Getenv("POSTGRES_DB")
 	postgresUser := os.Getenv("POSTGRES_USER")
 	postgresPass := os.Getenv("POSTGRES_PASSWORD")
-	postgresHost := "localhost"
-	postgresPort := "5432"
+	postgresHost := os.Getenv("POSTGRES_HOST")
+	postgresPort := os.Getenv("POSTGRES_PORT")
+	sslMode := os.Getenv("POSTGRES_SSL_MODE")
 
 	ctx := context.Background()
 
-	conn, err := pgx.Connect(ctx, fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", postgresUser, postgresPass, postgresHost, postgresPort, postgresDB))
+	conn, err := pgx.Connect(ctx, fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s", postgresUser, postgresPass, postgresHost, postgresPort, postgresDB, sslMode))
 	if err != nil {
 		return err
 	}
