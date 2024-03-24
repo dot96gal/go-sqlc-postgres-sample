@@ -1,0 +1,36 @@
+name: Test
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    services:
+      dind:
+        image: docker:23.0-rc-dind-rootless
+        ports:
+          - 2375:2375    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.21"
+
+      - name: Lint
+        uses: golangci/golangci-lint-action@v4
+        with:
+          version: v1.54
+          working-directory: ./
+
+      - name: Test
+        env:
+          TEST_POSTGRES_DB: ${{ vars.TEST_POSTGRES_DB }}
+          TEST_POSTGRES_USER: ${{ vars.TEST_POSTGRES_USER }}
+          TEST_POSTGRES_PASSWORD: ${{ vars.TEST_POSTGRES_PASSWORD }}
+        run: >
+          TEST_POSTGRES_DB=${TEST_POSTGRES_DB}
+          TEST_POSTGRES_USER=${TEST_POSTGRES_USER}
+          TEST_POSTGRES_PASSWORD=${TEST_POSTGRES_PASSWORD}
+          go test -race ./...
