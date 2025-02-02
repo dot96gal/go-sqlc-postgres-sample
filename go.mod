@@ -3,7 +3,7 @@ module github.com/dot96gal/go-sqlc-postgres-sample
 go 1.22.1
 
 require (
-	github.com/golang-migrate/migrate/v4 v4.18.1
+	github.com/golang-migrate/migrate/v4 v4.18.2
 	github.com/google/uuid v1.6.0
 	github.com/jackc/pgx/v5 v5.7.2
 	github.com/ory/dockertest/v3 v3.11.0
