@@ -26,7 +26,12 @@ func run() error {
 	if err != nil {
 		return err
 	}
-	defer conn.Close(ctx)
+	defer func() {
+		err = conn.Close(ctx)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
 
 	queries := sqlc.New(conn)
 
