@@ -1,7 +1,8 @@
 module github.com/dot96gal/go-sqlc-postgres-sample
 
-go 1.22.1
-toolchain go1.24.1
+go 1.23.0
+
+toolchain go1.24.2
 
 require (
 	github.com/golang-migrate/migrate/v4 v4.18.3
